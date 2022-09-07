@@ -9,7 +9,7 @@ async function searchEmail(email:string){
     })
 
     return result;
-    
+
 }
 
 async function insertUser(email:string, password:string){
@@ -26,7 +26,8 @@ async function insertUser(email:string, password:string){
 }
 
 const authRepository = {
-    searchEmail
+    searchEmail,
+    insertUser
 }
 
 export default authRepository;

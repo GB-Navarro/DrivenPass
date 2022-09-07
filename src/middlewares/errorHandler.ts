@@ -5,7 +5,7 @@ export default async function errorHandler(error: any, req: Request, res: Respon
     if(error.code === "error_dataDontIsValid"){
         return res.status(404).send({message: error.message});
     }
-    if(error.code === "error_emailAlreadyIsUse"){
+    if(error.code === "error_emailAlreadyInUse"){
         return res.status(409).send({message: error.message});
     }
     
