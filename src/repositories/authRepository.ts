@@ -9,6 +9,20 @@ async function searchEmail(email:string){
     })
 
     return result;
+    
+}
+
+async function insertUser(email:string, password:string){
+
+    const result = await client.users.create({
+        data: {
+            email: email,
+            password: password
+        }
+    })
+
+    return result;
+
 }
 
 const authRepository = {
