@@ -46,6 +46,11 @@ async function login(email: Omit<users, "id" | "password">, password: Omit<users
     await checkEmailExistence(email.toString());
     
     const realPassword = await authRepository.getPasswordByEmail(email.toString());
+    const isEqual = bcrypt.compareSync(password.toString(), realPassword.toString());
+
+    if(!(isEqual)){
+        throw { code: "error_wrongPassword", message: "Wrong password!" };
+    }
 
 }
 

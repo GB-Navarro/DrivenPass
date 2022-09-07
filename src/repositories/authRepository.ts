@@ -35,7 +35,7 @@ async function getPasswordByEmail(email: string){
         }
     })
 
-    return result;
+    return result.password;
 
 }
 
