@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import authRepository from "../repositories/authRepository.js";
 
 async function checkEmailUniqueness(email:string){
@@ -10,8 +11,23 @@ async function checkEmailUniqueness(email:string){
 
 }
 
+function encryptPassword(password:string){
+    
+    const encryptedPassword = bcrypt.hashSync(password,10);
+
+    return encryptPassword;
+
+}
+
+async function createUser(email:string,password:string){
+
+    await checkEmailUniqueness(email);
+    
+    const encryptedPassword = encryptPassword(password);
+}
+
 const authServices = {
-    checkEmailUniqueness
+    createUser
 }
 
 export default authServices;

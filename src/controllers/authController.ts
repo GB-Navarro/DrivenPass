@@ -6,8 +6,8 @@ async function signUp(req: Request, res: Response){
 
     const { email, password } = req.body;
 
-    await authServices.checkEmailUniqueness(email);
-    
+    await authServices.createUser(email,password);
+
     res.status(200).send("Hello World!");
 }
 
