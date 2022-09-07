@@ -1,8 +1,9 @@
 import { client } from "./../dbStrategy/postgres.js";
+import { users } from "@prisma/client";
 
-async function searchEmail(email:string){
+async function searchEmail(email: string) {
 
-    const result = await client.users.findFirst({
+    const result: users = await client.users.findFirst({
         where: {
             email: email
         }
@@ -12,16 +13,14 @@ async function searchEmail(email:string){
 
 }
 
-async function insertUser(email:string, password:string){
+async function insertUser(email: string, password: string) {
 
-    const result = await client.users.create({
+    await client.users.create({
         data: {
             email: email,
             password: password
         }
     })
-
-    return result;
 
 }
 

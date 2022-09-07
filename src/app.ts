@@ -8,7 +8,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 
 
 
-dotenv.config({path:"../.env"});
+dotenv.config({ path: "../.env" });
 
 const server = express();
 
