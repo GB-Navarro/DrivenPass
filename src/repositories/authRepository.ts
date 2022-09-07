@@ -1,11 +1,14 @@
 import { client } from "./../dbStrategy/postgres.js";
 
 async function searchEmail(email:string){
-    const result = client.users.findFirst({
+
+    const result = await client.users.findFirst({
         where: {
             email: email
         }
     })
+
+    return result;
 }
 
 const authRepository = {
