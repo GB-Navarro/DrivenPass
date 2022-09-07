@@ -11,8 +11,16 @@ async function signUp(req: Request, res: Response) {
     res.status(200).send("The user was created!");
 }
 
+async function signIn(req: Request, res: Response){
+
+    const { email, password }: {email: string, password: string } = req.body;
+
+    res.status(200).send("Hello World!");
+}
+
 const authController = {
-    signUp
+    signUp,
+    signIn
 }
 
 export default authController;
