@@ -4,9 +4,10 @@ async function checkEmailUniqueness(email:string){
 
     const result = await authRepository.searchEmail(email);
 
-    if(result != undefined){
+    if(result != null){
         throw { code: "error_emailAlreadyIsUse", message: "This e-mail has already in use by other user"};
     }
+
 }
 
 const authServices = {
