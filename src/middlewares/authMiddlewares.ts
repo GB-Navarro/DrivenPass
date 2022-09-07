@@ -14,8 +14,8 @@ function validateSignUpSchema(req: Request, res: Response, next: NextFunction){
     next();
 }
 
-const signUpMiddlewares = {
+const authMiddlewares = {
     validateSignUpSchema
 }
 
-export default signUpMiddlewares;
+export default authMiddlewares;
