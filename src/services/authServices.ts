@@ -1,3 +1,5 @@
+import { users } from "@prisma/client";
+
 import bcrypt from "bcrypt";
 import authRepository from "../repositories/authRepository.js";
 
@@ -39,8 +41,14 @@ async function checkEmailExistence(email: string) {
 
 }
 
+async function login(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">){
+    
+    await checkEmailExistence(email.toString());
+}
+
 const authServices = {
-    createUser
+    createUser,
+    login
 }
 
 export default authServices;
