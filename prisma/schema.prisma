@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cards {
+  id             Int       @id(map: "cards_pk") @default(autoincrement())
+  userId         Int
+  number         String    @unique(map: "public.cards_number_key")
+  name           String    @db.VarChar(50)
+  securityCode   Int
+  expirationDate String    @db.VarChar(5)
+  password       String
+  isVirtual      Boolean
+  type           cardTypes
+  tittle         String    @db.VarChar(50)
+  users          users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "cards_fk0")
+}
+
+model credentials {
+  id       Int    @id(map: "credentials_pk") @default(autoincrement())
+  userId   Int
+  url      String
+  username String
+  password String
+  tittle   String
+  users    users  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "credentials_fk0")
+}
+
+model securityNotes {
+  id     Int    @id(map: "securityNotes_pk") @default(autoincrement())
+  userId Int
+  text   String @db.VarChar(1000)
+  tittle String @db.VarChar(50)
+  users  users  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "securityNotes_fk0")
+}
+
+model users {
+  id            Int             @id(map: "users_pk") @default(autoincrement())
+  email         String          @unique(map: "public.users_email_key") @db.VarChar(50)
+  password      String
+  cards         cards[]
+  credentials   credentials[]
+  securityNotes securityNotes[]
+  wifi          wifi[]
+}
+
+model wifi {
+  id       Int    @id(map: "wifi_pk") @default(autoincrement())
+  userId   Int
+  name     String @db.VarChar(50)
+  password String
+  tittle   String @db.VarChar(50)
+  users    users  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wifi_fk0")
+}
+
+enum cardTypes {
+  debit
+  credit
+  both
+}
