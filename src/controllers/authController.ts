@@ -5,7 +5,7 @@ import authServices from "./../services/authServices.js";
 
 async function signUp(req: Request, res: Response) {
 
-    const { email, password }: { email: string, password: string } = req.body;
+    const { email, password }: { email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email"> } = req.body;
 
     await authServices.createUser(email, password);
 

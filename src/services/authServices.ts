@@ -21,13 +21,13 @@ function encryptPassword(password: string): string {
 
 }
 
-async function createUser(email: string, password: string) {
+async function createUser(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
 
-    await checkEmailUniqueness(email);
+    await checkEmailUniqueness(email.toString());
 
-    const encryptedPassword = encryptPassword(password);
+    const encryptedPassword = encryptPassword(password.toString());
 
-    await authRepository.insertUser(email, encryptedPassword);
+    await authRepository.insertUser(email.toString(), encryptedPassword);
 
 }
 
@@ -42,8 +42,11 @@ async function checkEmailExistence(email: string) {
 }
 
 async function login(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">){
-    
+
     await checkEmailExistence(email.toString());
+    
+    const realPassword = await authRepository.getPasswordByEmail(email.toString());
+
 }
 
 const authServices = {

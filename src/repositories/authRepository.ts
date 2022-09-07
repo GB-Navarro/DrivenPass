@@ -41,7 +41,8 @@ async function getPasswordByEmail(email: string){
 
 const authRepository = {
     searchEmail,
-    insertUser
+    insertUser,
+    getPasswordByEmail
 }
 
 export default authRepository;
