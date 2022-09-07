@@ -29,6 +29,16 @@ async function createUser(email: string, password: string) {
 
 }
 
+async function checkEmailExistence(email: string) {
+
+    const result = await authRepository.searchEmail(email);
+
+    if (result === null) {
+        throw { code: "error_thisEmailIsNotRegistered", message: "This e-mail is not registered!" };
+    }
+
+}
+
 const authServices = {
     createUser
 }

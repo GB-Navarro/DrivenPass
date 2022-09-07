@@ -8,6 +8,9 @@ export default async function errorHandler(error: any, req: Request, res: Respon
     if (error.code === "error_emailAlreadyInUse") {
         return res.status(409).send({ message: error.message });
     }
+    if (error.code === "error_thisEmailIsNotRegistered"){
+        return res.status(401).send({ message: error.message });
+    }
 
     return res.sendStatus(500);
 }
