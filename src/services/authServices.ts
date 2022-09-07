@@ -6,7 +6,6 @@ async function checkEmailUniqueness(email:string){
     const result = await authRepository.searchEmail(email);
 
     if(result != null){
-        console.log("a");
         throw { code: "error_emailAlreadyInUse", message: "This e-mail has already in use by other user"};
     }
 
