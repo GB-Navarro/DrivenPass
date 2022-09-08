@@ -41,17 +41,21 @@ async function checkEmailExistence(email: string) {
 
 }
 
-async function login(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">){
+async function comparePasswords(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">){
 
-    await checkEmailExistence(email.toString());
-    
     const realPassword = await authRepository.getPasswordByEmail(email.toString());
     const isEqual = bcrypt.compareSync(password.toString(), realPassword.toString());
 
     if(!(isEqual)){
         throw { code: "error_wrongPassword", message: "Wrong password!" };
     }
+}
 
+async function login(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">){
+
+    await checkEmailExistence(email.toString());
+    await comparePasswords(email, password);
+    
 }
 
 const authServices = {
