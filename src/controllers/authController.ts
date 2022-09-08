@@ -16,9 +16,9 @@ async function signIn(req: Request, res: Response) {
 
     const { email, password }: { email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email"> } = req.body;
 
-    await authServices.login(email, password);
+    const token = await authServices.login(email, password);
 
-    res.status(200).send("Hello World!");
+    res.status(200).send(token);
 }
 
 const authController = {

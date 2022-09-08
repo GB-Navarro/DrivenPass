@@ -1,13 +1,9 @@
 import { users } from "@prisma/client";
 
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
-
 
 import authRepository from "../repositories/authRepository.js";
-
-dotenv.config({ path: "./../../.env" });
+import authUtils from "../utils/authUtils.js";
 
 async function checkEmailUniqueness(email: string) {
 
@@ -16,25 +12,15 @@ async function checkEmailUniqueness(email: string) {
     if (result != null) {
         throw { code: "error_emailAlreadyInUse", message: "This e-mail has already in use by other user" };
     }
-
-}
-
-function encryptPassword(password: string): string {
-
-    const encryptedPassword = bcrypt.hashSync(password, 10);
-
-    return encryptedPassword;
-
 }
 
 async function createUser(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
 
     await checkEmailUniqueness(email.toString());
 
-    const encryptedPassword = encryptPassword(password.toString());
+    const encryptedPassword = authUtils.encryptPassword(password.toString());
 
     await authRepository.insertUser(email.toString(), encryptedPassword);
-
 }
 
 async function checkEmailExistence(email: string) {
@@ -44,7 +30,6 @@ async function checkEmailExistence(email: string) {
     if (result === null) {
         throw { code: "error_thisEmailIsNotRegistered", message: "This e-mail is not registered!" };
     }
-
 }
 
 async function comparePasswords(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
@@ -57,27 +42,14 @@ async function comparePasswords(email: Omit<users, "id" | "password">, password:
     }
 }
 
-function generateToken(email: Omit<users, "id" | "password">): string {
-
-    const data = {
-        email: email
-    }
-
-    const secretKey = process.env.JWT_SECRET;
-    const configs = { expiresIn: 60*10 } /* O token irá expirar em 10 minutos*/
-
-    const token = jwt.sign(data, secretKey, configs);
-
-    return token;
-}
-
 async function login(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
 
     await checkEmailExistence(email.toString());
     await comparePasswords(email, password);
     
-    const token = generateToken(email);
+    const token = authUtils.generateToken(email);
 
+    return token;
 }
 
 const authServices = {
