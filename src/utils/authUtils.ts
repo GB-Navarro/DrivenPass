@@ -1,4 +1,5 @@
 import { users } from "@prisma/client";
+import { userEmail, userPassword } from "../types/authTypes";
 
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -6,7 +7,7 @@ import jwt from "jsonwebtoken";
 
 dotenv.config({ path: "../../.env" });
 
-function encryptPassword(password: Omit<users, "id" | "email">): string {
+function encryptPassword(password: userPassword): string {
 
     const encryptedPassword: string = bcrypt.hashSync(password.toString(), 10);
 
@@ -24,7 +25,7 @@ function generateRegistrationData(email: string, encryptedPassword: string): Omi
     return registrationData;
 }
 
-function generateToken(email: Omit<users, "id" | "password">): string {
+function generateToken(email: userEmail): string {
 
     const data: Omit<users, "id" | "password"> = {
         email: email.toString()

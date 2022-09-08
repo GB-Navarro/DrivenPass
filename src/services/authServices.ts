@@ -1,11 +1,12 @@
 import { users } from "@prisma/client";
+import { userEmail, userPassword } from "../types/authTypes.js";
 
 import bcrypt from "bcrypt";
 
 import authRepository from "../repositories/authRepository.js";
 import authUtils from "../utils/authUtils.js";
 
-async function checkEmailUniqueness(email: Omit<users, "id" | "password">) {
+async function checkEmailUniqueness(email: userEmail) {
 
     const result: users = await authRepository.searchEmail(email);
 
@@ -14,9 +15,7 @@ async function checkEmailUniqueness(email: Omit<users, "id" | "password">) {
     }
 }
 
-
-
-async function createUser(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
+async function createUser(email: userEmail, password: userPassword) {
 
     await checkEmailUniqueness(email);
 
@@ -27,7 +26,7 @@ async function createUser(email: Omit<users, "id" | "password">, password: Omit<
     await authRepository.insertUser(registrationData);
 }
 
-async function checkEmailExistence(email: Omit<users, "id" | "password">) {
+async function checkEmailExistence(email: userEmail) {
 
     const result: users = await authRepository.searchEmail(email);
 
@@ -36,7 +35,7 @@ async function checkEmailExistence(email: Omit<users, "id" | "password">) {
     }
 }
 
-async function comparePasswords(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
+async function comparePasswords(email: userEmail, password: userPassword) {
 
     const realPassword: string = await authRepository.getPasswordByEmail(email);
 
@@ -47,7 +46,7 @@ async function comparePasswords(email: Omit<users, "id" | "password">, password:
     }
 }
 
-async function login(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
+async function login(email: userEmail, password: userPassword) {
 
     await checkEmailExistence(email);
     await comparePasswords(email, password);
@@ -58,7 +57,7 @@ async function login(email: Omit<users, "id" | "password">, password: Omit<users
 }
 
 const authServices = {
-    
+
     createUser,
     login
 }

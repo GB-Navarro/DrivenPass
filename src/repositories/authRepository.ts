@@ -1,7 +1,8 @@
 import { client } from "./../dbStrategy/postgres.js";
 import { users } from "@prisma/client";
+import { userEmail } from "../types/authTypes.js";
 
-async function searchEmail(email: Omit<users, "id" | "password">) {
+async function searchEmail(email: userEmail) {
 
     const result: users = await client.users.findUnique({
         where: {
@@ -19,7 +20,7 @@ async function insertUser(data: Omit<users, "id">) {
     })
 }
 
-async function getPasswordByEmail(email: Omit<users, "id" | "password">) {
+async function getPasswordByEmail(email: userEmail) {
 
     const result: Omit<users, "id" | "email"> = await client.users.findUnique({
         where: {
@@ -34,7 +35,7 @@ async function getPasswordByEmail(email: Omit<users, "id" | "password">) {
 }
 
 const authRepository = {
-    
+
     searchEmail,
     insertUser,
     getPasswordByEmail

@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { users } from "@prisma/client";
+import { userEmail, userPassword } from "../types/authTypes.js";
 
 import authServices from "./../services/authServices.js";
 
 async function signUp(req: Request, res: Response) {
 
-    const { email, password }: { email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email"> } = req.body;
+    const { email, password }: { email: userEmail, password: userPassword } = req.body;
 
     await authServices.createUser(email, password);
 
@@ -14,7 +14,7 @@ async function signUp(req: Request, res: Response) {
 
 async function signIn(req: Request, res: Response) {
 
-    const { email, password }: { email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email"> } = req.body;
+    const { email, password }: { email: userEmail, password: userPassword } = req.body;
 
     const token: string = await authServices.login(email, password);
 
@@ -22,7 +22,7 @@ async function signIn(req: Request, res: Response) {
 }
 
 const authController = {
-    
+
     signUp,
     signIn
 }
