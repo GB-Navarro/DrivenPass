@@ -1,7 +1,13 @@
 import { users } from "@prisma/client";
 
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+
+
 import authRepository from "../repositories/authRepository.js";
+
+dotenv.config({ path: "./../../.env" });
 
 async function checkEmailUniqueness(email: string) {
 
@@ -41,21 +47,37 @@ async function checkEmailExistence(email: string) {
 
 }
 
-async function comparePasswords(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">){
+async function comparePasswords(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
 
     const realPassword = await authRepository.getPasswordByEmail(email.toString());
     const isEqual = bcrypt.compareSync(password.toString(), realPassword.toString());
 
-    if(!(isEqual)){
+    if (!(isEqual)) {
         throw { code: "error_wrongPassword", message: "Wrong password!" };
     }
 }
 
-async function login(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">){
+function generateToken(email: Omit<users, "id" | "password">): string {
+
+    const data = {
+        email: email
+    }
+
+    const secretKey = process.env.JWT_SECRET;
+    const configs = { expiresIn: 60*10 } /* O token irá expirar em 10 minutos*/
+
+    const token = jwt.sign(data, secretKey, configs);
+
+    return token;
+}
+
+async function login(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
 
     await checkEmailExistence(email.toString());
     await comparePasswords(email, password);
     
+    const token = generateToken(email);
+
 }
 
 const authServices = {
