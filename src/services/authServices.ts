@@ -14,8 +14,6 @@ async function checkEmailUniqueness(email: Omit<users, "id" | "password">) {
     }
 }
 
-
-
 async function createUser(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
 
     await checkEmailUniqueness(email);
@@ -58,7 +56,7 @@ async function login(email: Omit<users, "id" | "password">, password: Omit<users
 }
 
 const authServices = {
-    
+
     createUser,
     login
 }
