@@ -6,30 +6,43 @@ import jwt from "jsonwebtoken";
 
 dotenv.config({ path: "../../.env" });
 
-function encryptPassword(password: string): string {
+function encryptPassword(password: Omit<users, "id" | "email">): string {
 
-    const encryptedPassword = bcrypt.hashSync(password, 10);
+    const encryptedPassword: string = bcrypt.hashSync(password.toString(), 10);
 
     return encryptedPassword;
 }
 
-function generateToken(email: Omit<users, "id" | "password">): string {
+function generateRegistrationData(email: string, encryptedPassword: string): Omit<users, "id"> {
 
-    const data = {
-        email: email
+    const registrationData: Omit<users, "id"> = {
+
+        email: email,
+        password: encryptedPassword
     }
 
-    const secretKey = process.env.JWT_SECRET;
-    const configs = { expiresIn: 60 * 10 } /* O token irá expirar em 10 minutos*/
+    return registrationData;
+}
 
-    const token = jwt.sign(data, secretKey, configs);
+function generateToken(email: Omit<users, "id" | "password">): string {
+
+    const data: Omit<users, "id" | "password"> = {
+        email: email.toString()
+    }
+
+    const secretKey: string = process.env.JWT_SECRET;
+    const configs: { expiresIn: number } = { expiresIn: 60 * 10 } /* O token irá expirar em 10 minutos*/
+
+    const token: string = jwt.sign(data, secretKey, configs);
 
     return token;
 }
 
 const authUtils = {
-    generateToken,
-    encryptPassword
+
+    encryptPassword,
+    generateRegistrationData,
+    generateToken
 }
 
 export default authUtils;

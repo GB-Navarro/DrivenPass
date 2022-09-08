@@ -16,12 +16,13 @@ async function signIn(req: Request, res: Response) {
 
     const { email, password }: { email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email"> } = req.body;
 
-    const token = await authServices.login(email, password);
+    const token: string = await authServices.login(email, password);
 
     res.status(200).send(token);
 }
 
 const authController = {
+    
     signUp,
     signIn
 }

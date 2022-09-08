@@ -27,6 +27,7 @@ function validateSignInSchema(req: Request, res: Response, next: NextFunction) {
 }
 
 const authMiddlewares = {
+    
     validateSignUpSchema,
     validateSignInSchema
 }

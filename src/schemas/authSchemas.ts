@@ -13,6 +13,7 @@ const signIn = Joi.object({
 })
 
 const authSchemas = {
+    
     signUp,
     signIn
 }
