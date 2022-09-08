@@ -20,7 +20,7 @@ function generateToken(email: Omit<users, "id" | "password">): string {
     }
 
     const secretKey = process.env.JWT_SECRET;
-    const configs = { expiresIn: 60*10 } /* O token irá expirar em 10 minutos*/
+    const configs = { expiresIn: 60 * 10 } /* O token irá expirar em 10 minutos*/
 
     const token = jwt.sign(data, secretKey, configs);
 

@@ -10,7 +10,6 @@ async function searchEmail(email: string) {
     })
 
     return result;
-
 }
 
 async function insertUser(email: string, password: string) {
@@ -21,22 +20,20 @@ async function insertUser(email: string, password: string) {
             password: password
         }
     })
-
 }
 
-async function getPasswordByEmail(email: string){
-    
+async function getPasswordByEmail(email: string) {
+
     const result: Omit<users, "id" | "email"> = await client.users.findUnique({
-        where:{
+        where: {
             email: email
         },
-        select:{
+        select: {
             password: true
         }
     })
 
     return result.password;
-
 }
 
 const authRepository = {

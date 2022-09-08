@@ -46,7 +46,7 @@ async function login(email: Omit<users, "id" | "password">, password: Omit<users
 
     await checkEmailExistence(email.toString());
     await comparePasswords(email, password);
-    
+
     const token = authUtils.generateToken(email);
 
     return token;
