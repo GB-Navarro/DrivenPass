@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 
 async function create(req: Request, res: Response ){
 
-    const email = res.locals.email;
+    const data : any = res.locals.data;
+    console.log("createCredentialData => ", data);
     
     res.status(200).send("Hello World!");
 }

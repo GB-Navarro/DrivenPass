@@ -4,6 +4,7 @@ import { users } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 import authRepository from "../repositories/authRepository.js";
+import genericUtils from "../utils/genericUtils.js";
 import authUtils from "../utils/authUtils.js";
 
 async function checkEmailUniqueness(email: string) {
@@ -21,7 +22,7 @@ async function createUser(data: IAuthData) {
 
     await checkEmailUniqueness(email);
 
-    const encryptedPassword: string = authUtils.encryptPassword(password);
+    const encryptedPassword: string = genericUtils.encryptPassword(password);
 
     const registrationData: IAuthData = authUtils.generateRegistrationData(email, encryptedPassword);
 
@@ -35,6 +36,8 @@ async function checkEmailExistence(email: string) {
     if (result === null) {
         throw { code: "error_thisEmailIsNotRegistered", message: "This e-mail is not registered!" };
     }
+
+    return result
 }
 
 async function comparePasswords(data: IAuthData) {
@@ -54,10 +57,11 @@ async function login(data: IAuthData) {
 
     const { email } = data;
 
-    await checkEmailExistence(email);
+    const { id } = await checkEmailExistence(email);
+
     await comparePasswords(data);
 
-    const token: string = authUtils.generateToken(email);
+    const token: string = authUtils.generateToken(email, id);
 
     return token;
 }

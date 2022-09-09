@@ -1,19 +1,12 @@
-import { IAuthData, userEmail } from "../types/authTypes";
+import { IAuthData } from "../types/authTypes";
+import { users } from "@prisma/client";
 
-import bcrypt from "bcrypt";
 import dotenv from "dotenv";
-import jwt, { JwtPayload } from "jsonwebtoken"
-import { options } from "joi";
-import { json } from "express";
+import jwt from "jsonwebtoken"
 
 dotenv.config({ path: "../../.env" });
 
-function encryptPassword(password: string): string {
 
-    const encryptedPassword: string = bcrypt.hashSync(password, 10);
-
-    return encryptedPassword;
-}
 
 function generateRegistrationData(email: string, encryptedPassword: string): IAuthData {
 
@@ -26,9 +19,10 @@ function generateRegistrationData(email: string, encryptedPassword: string): IAu
     return registrationData;
 }
 
-function generateToken(email: string): string {
+function generateToken(email: string, id: number): string {
 
-    const data: userEmail = {
+    const data: Omit<users, "password"> = {
+        id: id,
         email: email
     }
 
@@ -50,15 +44,20 @@ function filterToken(token: string): string {
     return filteredToken
 }
 
-function validateToken(token: string): string {
+function checkTokenValidity(token: string): string {
 
     const secretKey: string = process.env.JWT_SECRET
 
     try {
 
-        const { email } : any= jwt.verify(token, secretKey)
+        const { id, email } : any = jwt.verify(token, secretKey)
 
-        return email;
+        const data: any = {
+            id: id,
+            email: email
+        }
+
+        return data;
     } catch (error) {
 
         throw { code: "error_invalidToken", message: "Invalid token!" };
@@ -66,12 +65,10 @@ function validateToken(token: string): string {
 }
 
 const authUtils = {
-
-    encryptPassword,
     generateRegistrationData,
     generateToken,
     filterToken,
-    validateToken
+    checkTokenValidity
 }
 
 export default authUtils;

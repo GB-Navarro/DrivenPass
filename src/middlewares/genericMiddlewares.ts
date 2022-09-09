@@ -15,9 +15,9 @@ function validateToken(req: Request, res: Response, next: NextFunction): void {
     }
 
     const filteredToken = authUtils.filterToken(token);
-    const email: string = authUtils.validateToken(filteredToken);
+    const data: any = authUtils.checkTokenValidity(filteredToken);
 
-    res.locals.email = email;
+    res.locals.data = data;
 
     next();
 }

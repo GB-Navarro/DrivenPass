@@ -5,10 +5,10 @@ export default async function errorHandler(error: any, req: Request, res: Respon
     if (error.code === "error_dataDontIsValid" || error.code === "error_thisEmailIsNotRegistered") {
         return res.status(404).send(error.message);
     }
-    if (error.code === "error_emailAlreadyInUse") {
+    if (error.code === "error_emailAlreadyInUse" || "error_thisTittleAlreadyExist") {
         return res.status(409).send(error.message);
     }
-    if (error.code === "error_wrongPassword" || error.code === "error_notReceivedAToken" || error.code === "error_invalidToken")  {
+    if (error.code === "error_wrongPassword" || error.code === "error_notReceivedAToken" || error.code === "error_invalidToken") {
         return res.status(401).send(error.message);
     }
 
