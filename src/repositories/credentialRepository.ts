@@ -15,8 +15,16 @@ async function getTittleById(id: number) {
     return result;
 }
 
+async function insert(data: ICredentialData) {
+
+    await client.credentials.create({
+        data: data
+    })
+}
+
 const credentialRepository = {
-    getTittleById
+    getTittleById,
+    insert
 }
 
 export default credentialRepository

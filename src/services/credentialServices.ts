@@ -7,8 +7,10 @@ async function create(data: ICredentialData){
     const { userId, password } = data;
 
     await checkTittleExistence(userId);
-    
-    const encryptedPassword = genericUtils.encryptPassword(password);
+
+    data.password = genericUtils.encryptPassword(password);
+
+    await credentialRepository.insert(data);
 }
 
 async function checkTittleExistence(userId: number){
