@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 
-async function credentialController(req: Request, res: Response ){
+async function create(req: Request, res: Response ){
     res.status(200).send("Hello World!");
 }
 
-const exampleControllers = {
-    credentialController
+const credentialController = {
+    create
 }
 
 export default credentialController;
