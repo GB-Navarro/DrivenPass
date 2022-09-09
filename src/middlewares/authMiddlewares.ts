@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import { users } from "@prisma/client";
+import { IAuthData } from "../types/authTypes.js";
 
 import authSchemas from "../schemas/authSchemas.js";
 
 function validateSignUpSchema(req: Request, res: Response, next: NextFunction) {
 
-    const data: Omit<users, "id"> = req.body;
+    const data: IAuthData = req.body;
     const result = authSchemas.signUp.validate(data);
 
     if (result.error != undefined) {
@@ -17,7 +17,7 @@ function validateSignUpSchema(req: Request, res: Response, next: NextFunction) {
 
 function validateSignInSchema(req: Request, res: Response, next: NextFunction) {
 
-    const data: Omit<users, "id"> = req.body;
+    const data: IAuthData = req.body;
     const result = authSchemas.signIn.validate(data);
 
     if (result.error != undefined) {
