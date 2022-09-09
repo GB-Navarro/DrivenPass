@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { ICredentialData } from "../types/credentialTypes";
+import { ICredentialData } from "../types/credentialTypes.js";
 
-import credentialSchemas from "../schemas/credentialSchemas";
+import credentialSchemas from "../schemas/credentialSchemas.js";
 
 function validateCreateSchema(req: Request, res: Response, next: NextFunction) {
 
@@ -16,7 +16,7 @@ function validateCreateSchema(req: Request, res: Response, next: NextFunction) {
 }
 
 const credentialMiddlewares = {
-    
+
     validateCreateSchema
 }
 
