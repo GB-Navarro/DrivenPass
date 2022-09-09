@@ -1,12 +1,12 @@
+import { IAuthData } from "../types/authTypes.js";
 import { users } from "@prisma/client";
-import { userEmail, userPassword } from "../types/authTypes.js";
 
 import bcrypt from "bcrypt";
 
 import authRepository from "../repositories/authRepository.js";
 import authUtils from "../utils/authUtils.js";
 
-async function checkEmailUniqueness(email: userEmail) {
+async function checkEmailUniqueness(email: string) {
 
     const result: users = await authRepository.searchEmail(email);
 
@@ -15,18 +15,20 @@ async function checkEmailUniqueness(email: userEmail) {
     }
 }
 
-async function createUser(email: userEmail, password: userPassword) {
+async function createUser(data: IAuthData) {
+
+    const { email, password }: IAuthData = data
 
     await checkEmailUniqueness(email);
 
     const encryptedPassword: string = authUtils.encryptPassword(password);
 
-    const registrationData: Omit<users, "id"> = authUtils.generateRegistrationData(email.toString(), encryptedPassword);
+    const registrationData: IAuthData = authUtils.generateRegistrationData(email, encryptedPassword);
 
     await authRepository.insertUser(registrationData);
 }
 
-async function checkEmailExistence(email: userEmail) {
+async function checkEmailExistence(email: string) {
 
     const result: users = await authRepository.searchEmail(email);
 
@@ -35,7 +37,9 @@ async function checkEmailExistence(email: userEmail) {
     }
 }
 
-async function comparePasswords(email: userEmail, password: userPassword) {
+async function comparePasswords(data: IAuthData) {
+
+    const { email, password } = data;
 
     const realPassword: string = await authRepository.getPasswordByEmail(email);
 
@@ -46,10 +50,12 @@ async function comparePasswords(email: userEmail, password: userPassword) {
     }
 }
 
-async function login(email: userEmail, password: userPassword) {
+async function login(data: IAuthData) {
+
+    const { email } = data;
 
     await checkEmailExistence(email);
-    await comparePasswords(email, password);
+    await comparePasswords(data);
 
     const token: string = authUtils.generateToken(email);
 
