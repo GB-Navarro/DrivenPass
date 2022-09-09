@@ -1,3 +1,4 @@
+import { IAuthData } from "../types/authTypes.js";
 import { users } from "@prisma/client";
 
 import bcrypt from "bcrypt";
@@ -5,7 +6,7 @@ import bcrypt from "bcrypt";
 import authRepository from "../repositories/authRepository.js";
 import authUtils from "../utils/authUtils.js";
 
-async function checkEmailUniqueness(email: Omit<users, "id" | "password">) {
+async function checkEmailUniqueness(email: string) {
 
     const result: users = await authRepository.searchEmail(email);
 
@@ -14,18 +15,20 @@ async function checkEmailUniqueness(email: Omit<users, "id" | "password">) {
     }
 }
 
-async function createUser(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
+async function createUser(data: IAuthData) {
+
+    const { email, password }: IAuthData = data
 
     await checkEmailUniqueness(email);
 
     const encryptedPassword: string = authUtils.encryptPassword(password);
 
-    const registrationData: Omit<users, "id"> = authUtils.generateRegistrationData(email.toString(), encryptedPassword);
+    const registrationData: IAuthData = authUtils.generateRegistrationData(email, encryptedPassword);
 
     await authRepository.insertUser(registrationData);
 }
 
-async function checkEmailExistence(email: Omit<users, "id" | "password">) {
+async function checkEmailExistence(email: string) {
 
     const result: users = await authRepository.searchEmail(email);
 
@@ -34,7 +37,9 @@ async function checkEmailExistence(email: Omit<users, "id" | "password">) {
     }
 }
 
-async function comparePasswords(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
+async function comparePasswords(data: IAuthData) {
+
+    const { email, password } = data;
 
     const realPassword: string = await authRepository.getPasswordByEmail(email);
 
@@ -45,10 +50,12 @@ async function comparePasswords(email: Omit<users, "id" | "password">, password:
     }
 }
 
-async function login(email: Omit<users, "id" | "password">, password: Omit<users, "id" | "email">) {
+async function login(data: IAuthData) {
+
+    const { email } = data;
 
     await checkEmailExistence(email);
-    await comparePasswords(email, password);
+    await comparePasswords(data);
 
     const token: string = authUtils.generateToken(email);
 
