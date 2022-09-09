@@ -1,12 +1,14 @@
+import { IAuthData } from "../types/authTypes";
+
 import Joi from "joi";
 
-const signUp = Joi.object({
+const signUp = Joi.object <IAuthData>({
 
     email: Joi.string().email({ tlds: { allow: false } }).required(),
     password: Joi.string().min(10).required()
 })
 
-const signIn = Joi.object({
+const signIn = Joi.object <IAuthData>({
 
     email: Joi.string().email({ tlds: { allow: false } }).required(),
     password: Joi.string().min(10).required()
