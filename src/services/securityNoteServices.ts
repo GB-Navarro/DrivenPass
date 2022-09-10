@@ -12,9 +12,9 @@ async function checkTittleExistence(tittle: string, userId: number) {
     }
 }
 
-async function create(userId: number, securityNoteData: Omit<ISecurityNoteData,"userId">){
+async function create(userId: number, securityNoteData: Omit<ISecurityNoteData, "userId">) {
 
-    const { tittle, text } : Omit<ISecurityNoteData,"userId"> = securityNoteData;
+    const { tittle, text }: Omit<ISecurityNoteData, "userId"> = securityNoteData;
 
     await checkTittleExistence(tittle, userId);
 
@@ -27,9 +27,7 @@ async function create(userId: number, securityNoteData: Omit<ISecurityNoteData,"
     await securityNoteRepository.insert(data);
 }
 
-
-
-const securityNoteServices ={
+const securityNoteServices = {
 
     create
 }

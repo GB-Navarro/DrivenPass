@@ -4,7 +4,7 @@ import { ISecurityNoteData } from "../types/securityNoteTypes.js";
 
 async function getTittleById(tittle: string, id: number) {
 
-    const result: Tittle = await client.credentials.findFirst({
+    const result: Tittle = await client.securityNotes.findFirst({
         where: {
             tittle: tittle,
             userId: id,
