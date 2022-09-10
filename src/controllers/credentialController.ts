@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { request, Request, Response } from "express";
 import { ICredentialData } from "../types/credentialTypes.js";
 import { IUserData } from "../types/authTypes.js";
 
@@ -36,11 +36,23 @@ async function searchById(req: Request, res: Response) {
     res.status(200).send(credential);
 }
 
+async function deleteById(req: Request, res: Response) {
+
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
+
+    const { id: credentialId } = req.params;
+
+    await credentialServices.deleteById(userId, parseInt(credentialId));
+
+    res.status(202).send("This credential are been deleted!");
+}
+
 const credentialController = {
 
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default credentialController;

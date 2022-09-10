@@ -51,7 +51,7 @@ async function checkOwnership(userId: number, credentialId: number) {
     const result = await credentialRepository.checkOwnership(userId, credentialId);
 
     if (result === null) {
-        throw { code: "error_InvalidSearch", message: "Invalid Search!" };
+        throw { code: "error_InvalidRequest", message: "Invalid Request!" };
     }
 
     return result;
@@ -65,11 +65,18 @@ async function searchById(userId: number, credentialId: number) {
     return decryptedCredential;
 }
 
+async function deleteById(userId: number, credentialId: number){
+
+    await checkOwnership(userId, credentialId);
+    await credentialRepository.deleteById(credentialId);
+}
+
 const credentialServices = {
 
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default credentialServices;
