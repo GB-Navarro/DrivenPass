@@ -57,7 +57,7 @@ function checkTokenValidity(token: string): string {
 
     try {
 
-        const { id, email } : any = jwt.verify(token, secretKey)
+        const { id, email }: any = jwt.verify(token, secretKey)
 
         const data: any = {
             id: id,

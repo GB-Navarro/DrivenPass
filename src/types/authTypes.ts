@@ -7,9 +7,9 @@ export type IUserData = Omit<users, "password">
 
 /*
     const config = {
-	    headers: {
-		    "Authorization": "Bearer token_recebido" //Padrão da API (Bearer Authentication)
-	    }
+        headers: {
+            "Authorization": "Bearer token_recebido" //Padrão da API (Bearer Authentication)
+        }
     }
 */
 
