@@ -24,9 +24,34 @@ async function insert(data: Omit<credentials, "id">) {
     })
 }
 
+async function search(userId: number){
+
+    const result: credentials[] = await client.credentials.findMany({
+        where:{
+            userId: userId
+        }
+    });
+
+    return result;
+}
+
+async function checkOwnership(userId: number, credentialId: number){
+
+    const result: credentials = await client.credentials.findFirst({
+        where:{
+            id: credentialId,
+            userId: userId       
+        }
+    })
+
+    return result;
+}
+
 const credentialRepository = {
     getTittleById,
-    insert
+    insert,
+    search,
+    checkOwnership
 }
 
 export default credentialRepository

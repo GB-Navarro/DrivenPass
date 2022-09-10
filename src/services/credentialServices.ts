@@ -4,6 +4,16 @@ import { IUserData } from "../types/authTypes.js";
 
 import credentialRepository from "../repositories/credentialRepository.js";
 import genericUtils from "../utils/genericUtils.js";
+import credentialUtils from "../utils/credentialUtils.js";
+
+async function checkTittleExistence(tittle: string, userId: number) {
+
+    const result: Tittle = await credentialRepository.getTittleById(tittle, userId);
+
+    if (result != null) {
+        throw { code: "error_thisTittleAlreadyExist", message: "This tittle already exist!" };
+    }
+}
 
 async function create(userData: IUserData, credentialData: ICredentialData) {
 
@@ -27,18 +37,39 @@ async function create(userData: IUserData, credentialData: ICredentialData) {
     await credentialRepository.insert(data);
 }
 
-async function checkTittleExistence(tittle: string, userId: number) {
+async function search(userId: number) {
 
-    const result: Tittle = await credentialRepository.getTittleById(tittle, userId);
+    const encryptedData: credentials[] = await credentialRepository.search(userId);
 
-    if (result != null) {
-        throw { code: "error_thisTittleAlreadyExist", message: "This tittle already exist!" };
+    const decryptedData = credentialUtils.decryptMany(encryptedData);
+
+    return decryptedData;
+}
+
+async function checkOwnership(userId: number, credentialId: number) {
+
+    const result = await credentialRepository.checkOwnership(userId, credentialId);
+
+    if (result === null) {
+        throw { code: "error_InvalidSearch", message: "Invalid Search!" };
     }
+
+    return result;
+}
+
+async function searchById(userId: number, credentialId: number) {
+
+    const encryptedCredential = await checkOwnership(userId, credentialId);
+    const decryptedCredential = credentialUtils.decrypt(encryptedCredential);
+
+    return decryptedCredential;
 }
 
 const credentialServices = {
 
-    create
+    create,
+    search,
+    searchById
 }
 
 export default credentialServices;
