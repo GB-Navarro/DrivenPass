@@ -1,10 +1,9 @@
-import { request, Request, Response } from "express";
+import { Request, Response } from "express";
 import { ICredentialData } from "../types/credentialTypes.js";
+import { credentials } from "@prisma/client";
 import { IUserData } from "../types/authTypes.js";
 
-
 import credentialServices from "../services/credentialServices.js";
-import { credentials } from "@prisma/client";
 
 async function create(req: Request, res: Response) {
 
