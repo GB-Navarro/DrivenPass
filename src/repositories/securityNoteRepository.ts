@@ -49,7 +49,12 @@ async function checkOwnership(userId: number, securityNoteId: number) {
 }
 
 async function deleteById(securityNoteId: number) {
-
+    
+    await client.securityNotes.delete({
+        where:{
+            id: securityNoteId
+        }
+    })
 }
 
 const securityNoteRepository = {
