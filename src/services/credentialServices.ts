@@ -1,4 +1,5 @@
-import { ICredentialData, Tittle } from "../types/credentialTypes.js";
+import { ICredentialData } from "../types/credentialTypes.js";
+import { Tittle } from "../types/genericTypes.js";
 import { credentials } from "@prisma/client";
 import { IUserData } from "../types/authTypes.js";
 
