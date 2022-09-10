@@ -4,6 +4,16 @@ import { IUserData } from "../types/authTypes.js";
 
 import credentialRepository from "../repositories/credentialRepository.js";
 import genericUtils from "../utils/genericUtils.js";
+import credentialUtils from "../utils/credentialUtils.js";
+
+async function checkTittleExistence(tittle: string, userId: number) {
+
+    const result: Tittle = await credentialRepository.getTittleById(tittle, userId);
+
+    if (result != null) {
+        throw { code: "error_thisTittleAlreadyExist", message: "This tittle already exist!" };
+    }
+}
 
 async function create(userData: IUserData, credentialData: ICredentialData) {
 
@@ -27,18 +37,19 @@ async function create(userData: IUserData, credentialData: ICredentialData) {
     await credentialRepository.insert(data);
 }
 
-async function checkTittleExistence(tittle: string, userId: number) {
+async function search(userId: number){
 
-    const result: Tittle = await credentialRepository.getTittleById(tittle, userId);
+    const encryptedData: credentials[] = await credentialRepository.search(userId);
 
-    if (result != null) {
-        throw { code: "error_thisTittleAlreadyExist", message: "This tittle already exist!" };
-    }
+    const decryptedData = credentialUtils.decryptMany(encryptedData);
+
+    return decryptedData;
 }
 
 const credentialServices = {
 
-    create
+    create,
+    search
 }
 
 export default credentialServices;

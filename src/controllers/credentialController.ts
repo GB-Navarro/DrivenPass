@@ -17,10 +17,17 @@ async function create(req: Request, res: Response ){
 
 async function search(req: Request, res: Response){
     
-    res.status(200).send("Search!");
+    const userData : IUserData = res.locals.data;
+    const { id: userId } = userData;
+
+    const credentialsData = await credentialServices.search(userId);
+
+    res.status(200).send(credentialsData);
 }
 
 async function searchById(req: Request, res: Response){
+
+    const userData : IUserData = res.locals.data;
 
     res.status(200).send("Search By Id!");
 }

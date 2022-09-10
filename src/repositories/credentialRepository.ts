@@ -24,9 +24,21 @@ async function insert(data: Omit<credentials, "id">) {
     })
 }
 
+async function search(userId: number){
+
+    const result: credentials[] = await client.credentials.findMany({
+        where:{
+            userId: userId
+        }
+    });
+
+    return result;
+}
+
 const credentialRepository = {
     getTittleById,
-    insert
+    insert,
+    search
 }
 
 export default credentialRepository
