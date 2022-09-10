@@ -37,7 +37,7 @@ async function create(userData: IUserData, credentialData: ICredentialData) {
     await credentialRepository.insert(data);
 }
 
-async function search(userId: number){
+async function search(userId: number) {
 
     const encryptedData: credentials[] = await credentialRepository.search(userId);
 
@@ -46,10 +46,30 @@ async function search(userId: number){
     return decryptedData;
 }
 
+async function checkOwnership(userId: number, credentialId: number) {
+
+    const result = await credentialRepository.checkOwnership(userId, credentialId);
+
+    if (result === null) {
+        throw { code: "error_InvalidSearch", message: "Invalid Search!" };
+    }
+
+    return result;
+}
+
+async function searchById(userId: number, credentialId: number) {
+
+    const encryptedCredential = await checkOwnership(userId, credentialId);
+    const decryptedCredential = credentialUtils.decrypt(encryptedCredential);
+
+    return decryptedCredential;
+}
+
 const credentialServices = {
 
     create,
-    search
+    search,
+    searchById
 }
 
 export default credentialServices;

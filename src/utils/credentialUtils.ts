@@ -5,10 +5,20 @@ import Cryptr from "cryptr";
 
 dotenv.config({ path: "../../.env" })
 
-function decryptMany(encryptedCredentials: credentials[]) {
+function decrypt(encryptedCredential: credentials): credentials {
 
     const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
-;
+    const decryptedCredential = { ...encryptedCredential };
+
+    decryptedCredential.password = cryptr.decrypt(encryptedCredential.password);
+
+    return decryptedCredential;
+}
+
+function decryptMany(encryptedCredentials: credentials[]): credentials[] {
+
+    const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
+
     const decryptedCredentials = encryptedCredentials.map((encryptedCredential) => {
         encryptedCredential.password = cryptr.decrypt(encryptedCredential.password);
         return encryptedCredential;
@@ -19,6 +29,7 @@ function decryptMany(encryptedCredentials: credentials[]) {
 
 const credentialUtils = {
 
+    decrypt,
     decryptMany
 }
 

@@ -35,10 +35,23 @@ async function search(userId: number){
     return result;
 }
 
+async function checkOwnership(userId: number, credentialId: number){
+
+    const result: credentials = await client.credentials.findFirst({
+        where:{
+            id: credentialId,
+            userId: userId       
+        }
+    })
+
+    return result;
+}
+
 const credentialRepository = {
     getTittleById,
     insert,
-    search
+    search,
+    checkOwnership
 }
 
 export default credentialRepository
