@@ -35,6 +35,8 @@ async function checkEmailExistence(email: string) {
     if (result === null) {
         throw { code: "error_thisEmailIsNotRegistered", message: "This e-mail is not registered!" };
     }
+
+    return result
 }
 
 async function comparePasswords(data: IAuthData) {
@@ -54,10 +56,11 @@ async function login(data: IAuthData) {
 
     const { email } = data;
 
-    await checkEmailExistence(email);
+    const { id } = await checkEmailExistence(email);
+
     await comparePasswords(data);
 
-    const token: string = authUtils.generateToken(email);
+    const token: string = authUtils.generateToken(email, id);
 
     return token;
 }
