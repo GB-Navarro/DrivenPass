@@ -18,17 +18,17 @@ async function getTittleById(tittle: string, id: number) {
     return result;
 }
 
-async function insert(data: ISecurityNoteData){
+async function insert(data: ISecurityNoteData) {
 
     await client.securityNotes.create({
         data: data
     });
 }
 
-async function search(userId: number){
+async function search(userId: number) {
 
     const result: securityNotes[] = await client.securityNotes.findMany({
-        where:{
+        where: {
             userId: userId
         }
     });
@@ -39,9 +39,9 @@ async function search(userId: number){
 async function checkOwnership(userId: number, securityNoteId: number) {
 
     const result: securityNotes = await client.securityNotes.findFirst({
-        where:{
+        where: {
             id: securityNoteId,
-            userId: userId       
+            userId: userId
         }
     })
 
@@ -49,9 +49,9 @@ async function checkOwnership(userId: number, securityNoteId: number) {
 }
 
 async function deleteById(securityNoteId: number) {
-    
+
     await client.securityNotes.delete({
-        where:{
+        where: {
             id: securityNoteId
         }
     })
