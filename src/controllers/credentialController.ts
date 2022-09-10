@@ -10,7 +10,7 @@ async function create(req: Request, res: Response ){
 
     await credentialServices.create(userData, credentialData)
 
-    res.status(200).send("Hello World!");
+    res.status(201).send("The credential has been created!");
 }
 
 const credentialController = {
