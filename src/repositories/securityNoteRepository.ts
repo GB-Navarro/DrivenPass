@@ -1,5 +1,6 @@
 import { client } from "../dbStrategy/postgres.js";
 import { Tittle } from "../types/genericTypes.js";
+import { securityNotes } from "@prisma/client";
 import { ISecurityNoteData } from "../types/securityNoteTypes.js";
 
 async function getTittleById(tittle: string, id: number) {
@@ -24,10 +25,35 @@ async function insert(data: ISecurityNoteData){
     });
 }
 
+async function search(userId: number){
+
+    const result: securityNotes[] = await client.securityNotes.findMany({
+        where:{
+            userId: userId
+        }
+    });
+
+    return result;
+}
+
+async function checkOwnership(userId: number, credentialId: number){
+
+    const result: securityNotes = await client.securityNotes.findFirst({
+        where:{
+            id: credentialId,
+            userId: userId       
+        }
+    })
+
+    return result;
+}
+
 const securityNoteRepository = {
 
     insert,
-    getTittleById
+    getTittleById,
+    search,
+    checkOwnership
 }
 
 export default securityNoteRepository;
