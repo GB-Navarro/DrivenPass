@@ -1,5 +1,5 @@
-import { Tittle } from "../types/credentialTypes.js";
 import { client } from "../dbStrategy/postgres.js";
+import { Tittle } from "../types/genericTypes.js";
 import { credentials } from "@prisma/client";
 
 async function getTittleById(tittle: string, id: number) {
