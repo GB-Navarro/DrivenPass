@@ -1,15 +1,16 @@
-import { ICredentialData } from "../types/credentialTypes.js";
+import { ICredentialData, Tittle } from "../types/credentialTypes.js";
 import { credentials } from "@prisma/client";
 import { IUserData } from "../types/authTypes.js";
 
 import credentialRepository from "../repositories/credentialRepository.js";
 import genericUtils from "../utils/genericUtils.js";
 
-async function create(userData: IUserData, credentialData: ICredentialData){
+async function create(userData: IUserData, credentialData: ICredentialData) {
 
-    const { id: userId }  = userData;
+    const { id: userId }: IUserData = userData;
+    const { url, username, tittle }: Partial<ICredentialData> = credentialData;
 
-    let { password, url, username, tittle } = credentialData;
+    let { password }: Partial<ICredentialData> = credentialData;
 
     await checkTittleExistence(tittle, userId);
 
@@ -22,22 +23,22 @@ async function create(userData: IUserData, credentialData: ICredentialData){
         password: password,
         tittle: tittle,
     }
-    
+
     await credentialRepository.insert(data);
 }
 
-async function checkTittleExistence(tittle: string, userId: number){
+async function checkTittleExistence(tittle: string, userId: number) {
 
-    const result = await credentialRepository.getTittleById(tittle, userId);
+    const result: Tittle = await credentialRepository.getTittleById(tittle, userId);
 
-    if(result != null){
+    if (result != null) {
         throw { code: "error_thisTittleAlreadyExist", message: "This tittle already exist!" };
     }
 }
 
 
 const credentialServices = {
-    
+
     create
 }
 

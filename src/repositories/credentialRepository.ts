@@ -9,7 +9,7 @@ async function getTittleById(tittle: string, id: number) {
             tittle: tittle,
             userId: id,
         },
-        select:{
+        select: {
             tittle: true
         }
     })
@@ -17,7 +17,7 @@ async function getTittleById(tittle: string, id: number) {
     return result;
 }
 
-async function insert(data: Omit<credentials,"id">) {
+async function insert(data: Omit<credentials, "id">) {
 
     await client.credentials.create({
         data: data
