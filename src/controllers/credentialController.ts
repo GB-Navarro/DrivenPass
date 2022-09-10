@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
-import { IUserData } from "../types/authTypes.js";
 import { ICredentialData } from "../types/credentialTypes.js";
+import { IUserData } from "../types/authTypes.js";
+
+
 import credentialServices from "../services/credentialServices.js";
 
 async function create(req: Request, res: Response ){

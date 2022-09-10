@@ -4,7 +4,6 @@ import { users } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 import authRepository from "../repositories/authRepository.js";
-import genericUtils from "../utils/genericUtils.js";
 import authUtils from "../utils/authUtils.js";
 
 async function checkEmailUniqueness(email: string) {
@@ -22,7 +21,7 @@ async function createUser(data: IAuthData) {
 
     await checkEmailUniqueness(email);
 
-    const encryptedPassword: string = genericUtils.encryptPassword(password);
+    const encryptedPassword: string = authUtils.encryptPassword(password);
 
     const registrationData: IAuthData = authUtils.generateRegistrationData(email, encryptedPassword);
 

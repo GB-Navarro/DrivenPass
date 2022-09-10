@@ -1,8 +1,13 @@
-import bcrypt from "bcrypt";
+import Cryptr from "cryptr";
+import dotenv from "dotenv";
 
-function encryptPassword(password: string): string {
+dotenv.config({path: "../../.env"})
 
-    const encryptedPassword: string = bcrypt.hashSync(password, 10);
+function encryptPassword(password: string){
+    
+    const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
+
+    const encryptedPassword = cryptr.encrypt(password);
 
     return encryptedPassword;
 }

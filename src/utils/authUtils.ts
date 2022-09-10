@@ -1,10 +1,18 @@
 import { IAuthData, IUserData } from "../types/authTypes";
 
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+
 
 dotenv.config({ path: "../../.env" });
 
+function encryptPassword(password: string): string {
+
+    const encryptedPassword: string = bcrypt.hashSync(password, 10);
+
+    return encryptedPassword;
+}
 
 
 function generateRegistrationData(email: string, encryptedPassword: string): IAuthData {
@@ -64,6 +72,8 @@ function checkTokenValidity(token: string): string {
 }
 
 const authUtils = {
+
+    encryptPassword,
     generateRegistrationData,
     generateToken,
     filterToken,
