@@ -15,9 +15,21 @@ async function create(req: Request, res: Response ){
     res.status(201).send("The credential has been created!");
 }
 
+async function search(req: Request, res: Response){
+    
+    res.status(200).send("Search!");
+}
+
+async function searchById(req: Request, res: Response){
+
+    res.status(200).send("Search By Id!");
+}
+
 const credentialController = {
 
-    create
+    create,
+    search,
+    searchById
 }
 
 export default credentialController;
