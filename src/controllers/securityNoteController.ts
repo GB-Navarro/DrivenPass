@@ -41,6 +41,8 @@ async function deleteById(req: Request, res: Response) {
 
     const { id: securityNoteId } = req.params;
 
+    await securityNoteServices.deleteById(userId, parseInt(securityNoteId))
+
     res.status(202).send("This note has been deleted!");
 }
 

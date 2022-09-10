@@ -35,9 +35,9 @@ async function search(userId: number) {
     return data;
 }
 
-async function checkOwnership(userId: number, credentialId: number) {
+async function checkOwnership(userId: number, securityNoteId: number) {
 
-    const result = await securityNoteRepository.checkOwnership(userId, credentialId);
+    const result = await securityNoteRepository.checkOwnership(userId, securityNoteId);
 
     if (result === null) {
         throw { code: "error_InvalidRequest", message: "Invalid Request!" };
@@ -46,18 +46,25 @@ async function checkOwnership(userId: number, credentialId: number) {
     return result;
 }
 
-async function searchById(userId: number, credentialId: number) {
+async function searchById(userId: number, securityNoteId: number) {
 
-    const securityNote = await checkOwnership(userId, credentialId);
+    const securityNote = await checkOwnership(userId, securityNoteId);
 
     return securityNote;
+}
+
+async function deleteById(userId: number, securityNoteId: number) {
+
+    await checkOwnership(userId, securityNoteId);
+    await securityNoteRepository.deleteById(securityNoteId);
 }
 
 const securityNoteServices = {
 
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default securityNoteServices;
