@@ -36,11 +36,11 @@ async function search(userId: number){
     return result;
 }
 
-async function checkOwnership(userId: number, credentialId: number){
+async function checkOwnership(userId: number, securityNoteId: number) {
 
     const result: securityNotes = await client.securityNotes.findFirst({
         where:{
-            id: credentialId,
+            id: securityNoteId,
             userId: userId       
         }
     })
@@ -48,12 +48,22 @@ async function checkOwnership(userId: number, credentialId: number){
     return result;
 }
 
+async function deleteById(securityNoteId: number) {
+    
+    await client.securityNotes.delete({
+        where:{
+            id: securityNoteId
+        }
+    })
+}
+
 const securityNoteRepository = {
 
     insert,
     getTittleById,
     search,
-    checkOwnership
+    checkOwnership,
+    deleteById
 }
 
 export default securityNoteRepository;

@@ -35,11 +35,23 @@ async function searchById(req: Request, res: Response) {
     res.status(200).send(securityNote);
 }
 
+async function deleteById(req: Request, res: Response) {
+
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
+
+    const { id: securityNoteId } = req.params;
+
+    await securityNoteServices.deleteById(userId, parseInt(securityNoteId))
+
+    res.status(202).send("This note has been deleted!");
+}
+
 const securityNoteController = {
 
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default securityNoteController;
