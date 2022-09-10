@@ -36,10 +36,13 @@ async function searchById(req: Request, res: Response) {
     res.status(200).send(credential);
 }
 
-async function deleteById(req: Request, res: Response){
+async function deleteById(req: Request, res: Response) {
+
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
 
     const { id: credentialId } = req.params;
-    console.log("deleteId => ", credentialId);
+
+    await credentialServices.deleteById(userId, parseInt(credentialId));
 
     res.status(202).send("This credential are been deleted!");
 }

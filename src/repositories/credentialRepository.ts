@@ -47,11 +47,21 @@ async function checkOwnership(userId: number, credentialId: number){
     return result;
 }
 
+async function deleteById(credentialId: number){
+
+    await client.credentials.delete({
+        where:{
+            id: credentialId
+        }
+    })
+}
+
 const credentialRepository = {
     getTittleById,
     insert,
     search,
-    checkOwnership
+    checkOwnership,
+    deleteById
 }
 
 export default credentialRepository
