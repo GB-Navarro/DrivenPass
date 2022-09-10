@@ -1,5 +1,4 @@
-import { IAuthData } from "../types/authTypes";
-import { users } from "@prisma/client";
+import { IAuthData, IUserData } from "../types/authTypes";
 
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken"
@@ -21,14 +20,14 @@ function generateRegistrationData(email: string, encryptedPassword: string): IAu
 
 function generateToken(email: string, id: number): string {
 
-    const data: Omit<users, "password"> = {
+    const userInfo: IUserData = {
         id: id,
         email: email
     }
 
     const secretKey: string = process.env.JWT_SECRET;
     const configs: { expiresIn: number } = { expiresIn: 60 * 60 } /* O token irá expirar em 60 minutos*/
-    const token: string = jwt.sign(data, secretKey, configs);
+    const token: string = jwt.sign(userInfo, secretKey, configs);
 
     return token;
 }
