@@ -8,9 +8,34 @@ async function insert(data: Omit<documents, "id">) {
     })
 }
 
+async function search(userId: number){
+
+    const result: documents[] = await client.documents.findMany({
+        where:{
+            userId: userId
+        }
+    });
+
+    return result;
+}
+
+async function checkOwnership(userId: number, documentId: number){
+
+    const result: documents = await client.documents.findFirst({
+        where:{
+            id: documentId,
+            userId: userId       
+        }
+    })
+
+    return result;
+}
+
 const documentRepository = {
 
-    insert
+    insert,
+    search,
+    checkOwnership
 }
 
 export default documentRepository;

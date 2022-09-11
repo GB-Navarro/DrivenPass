@@ -1,5 +1,5 @@
 import { IDocumentData } from "../types/documentTypes";
-import { documents as document } from "@prisma/client";
+import { documents } from "@prisma/client";
 
 import documentRepository from "../repositories/documentRepository.js";
 
@@ -7,7 +7,7 @@ async function create(userId: number, documentData: IDocumentData) {
 
     const { type, name, emissionDate, validate, registrationNumber, issuer }: IDocumentData = documentData;
 
-    const data: Omit<document, "id"> = {
+    const data: Omit<documents, "id"> = {
         userId: userId,
         type: type,
         name: name,
@@ -20,9 +20,36 @@ async function create(userId: number, documentData: IDocumentData) {
     await documentRepository.insert(data);
 }
 
+async function search(userId: number) {
+
+    const documentsData: documents[] = await documentRepository.search(userId);
+
+    return documentsData;
+}
+
+async function checkOwnership(userId: number, documentId: number) {
+
+    const result = await documentRepository.checkOwnership(userId, documentId);
+
+    if (result === null) {
+        throw { code: "error_InvalidRequest", message: "Invalid Request!" };
+    }
+
+    return result;
+}
+
+async function searchById(userId: number, documentId: number) {
+
+    const documentData = await checkOwnership(userId, documentId);
+
+    return documentData;
+}
+
 const documentServices = {
 
-    create
+    create,
+    search,
+    searchById
 }
 
 export default documentServices;
