@@ -35,6 +35,18 @@ async function search(userId: number){
     return result;
 }
 
+async function checkOwnership(userId: number, cardId: number){
+
+    const result: cards = await client.cards.findFirst({
+        where:{
+            id: cardId,
+            userId: userId       
+        }
+    })
+
+    return result;
+}
+
 const cardRepository = {
 
     getTittleById,
