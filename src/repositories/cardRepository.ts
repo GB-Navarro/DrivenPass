@@ -24,10 +24,22 @@ async function insert(data: Omit<cards, "id">) {
     })
 }
 
+async function search(userId: number){
+
+    const result: cards[] = await client.cards.findMany({
+        where:{
+            userId: userId
+        }
+    });
+
+    return result;
+}
+
 const cardRepository = {
 
     getTittleById,
-    insert
+    insert,
+    search
 }
 
 export default cardRepository;

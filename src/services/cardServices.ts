@@ -38,8 +38,16 @@ async function create(userId: number, cardData: ICardData){
     await cardRepository.insert(data);
 }
 
+async function search(userId: number){
+
+    const data: cards[] = await cardRepository.search(userId);
+
+    return data;
+}
+
 const cardServices = {
-    create
+    create,
+    search
 }
 
 export default cardServices;

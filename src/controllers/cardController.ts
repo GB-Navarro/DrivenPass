@@ -1,3 +1,4 @@
+import { cards } from "@prisma/client";
 import { Request, Response } from "express";
 import cardServices from "../services/cardServices.js";
 import { IUserData } from "../types/authTypes.js";
@@ -15,11 +16,15 @@ async function create(req: Request, res: Response) {
 
 async function search(req: Request, res: Response){
 
-    res.status(200).send("Search!");
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
+
+    const cardsData: cards[] = await cardServices.search(userId);
+
+    res.status(200).send(cardsData);
 }
 
 async function searchById(req: Request, res: Response){
-    
+
     res.status(200).send("SearchById!");
 }
 
