@@ -13,9 +13,9 @@ const create = Joi.object<IDocumentData>({
     issuer: Joi.string().min(4).max(50).required()
 })
 
-const cardSchemas = {
+const documentSchemas = {
 
     create
 }
 
-export default cardSchemas;
+export default documentSchemas;
