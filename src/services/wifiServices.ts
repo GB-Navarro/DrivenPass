@@ -21,9 +21,17 @@ async function create(userId: number, wifiData: IWifiData) {
     await wifiRepository.insert(data);
 }
 
+async function search(userId: number){
+
+    const data: wifi[] = await wifiRepository.search(userId);
+
+    return data;
+}
+
 const wifiServices = {
 
-    create
+    create,
+    search
 }
 
 export default wifiServices;
