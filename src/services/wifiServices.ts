@@ -28,6 +28,17 @@ async function search(userId: number){
     return data;
 }
 
+async function checkOwnership(userId: number, wifiId: number) {
+
+    const result = await wifiRepository.checkOwnership(userId, wifiId);
+
+    if (result === null) {
+        throw { code: "error_InvalidRequest", message: "Invalid Request!" };
+    }
+
+    return result;
+}
+
 const wifiServices = {
 
     create,
