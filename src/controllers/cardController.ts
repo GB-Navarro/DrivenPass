@@ -25,7 +25,13 @@ async function search(req: Request, res: Response){
 
 async function searchById(req: Request, res: Response){
 
-    res.status(200).send("SearchById!");
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
+
+    const { id: cardId } = req.params;
+
+    const card = await cardServices.searchById(userId, parseInt(cardId));
+
+    res.status(200).send(card);
 }
 
 const cardController = {
