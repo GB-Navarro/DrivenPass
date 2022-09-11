@@ -9,9 +9,21 @@ async function insert(data: Omit<wifi, "id">) {
     })
 }
 
+async function search(userId: number){
+
+    const result: wifi[] = await client.wifi.findMany({
+        where:{
+            userId: userId
+        }
+    });
+
+    return result;
+}
+
 const wifiRepository = {
 
-    insert
+    insert,
+    search
 }
 
 export default wifiRepository;
