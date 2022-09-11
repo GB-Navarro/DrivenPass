@@ -46,11 +46,18 @@ async function searchById(userId: number, wifiId: number) {
     return wifiData;
 }
 
+async function deleteById(userId: number, wifiId: number){
+
+    await checkOwnership(userId, wifiId);
+    await wifiRepository.deleteById(wifiId);
+}
+
 const wifiServices = {
 
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default wifiServices;
