@@ -36,11 +36,21 @@ async function searchById(req: Request, res: Response) {
     res.status(200).send(result);
 }
 
+async function deleteById(req: Request, res: Response){
+
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
+
+    const { id: wifiId } = req.params;
+
+    res.status(202).send("This wifi has been deleted!");
+}
+
 const wifiController = {
 
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default wifiController;

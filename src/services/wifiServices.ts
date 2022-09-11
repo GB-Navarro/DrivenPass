@@ -1,9 +1,9 @@
-import { IUserData } from "../types/authTypes";
 import { IWifiData } from "../types/wifiTypes.js";
 import { wifi } from "@prisma/client";
 
-import genericUtils from "../utils/genericUtils.js";
 import wifiRepository from "../repositories/wifiRepository.js";
+import genericUtils from "../utils/genericUtils.js";
+
 
 async function create(userId: number, wifiData: IWifiData) {
 
