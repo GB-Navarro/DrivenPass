@@ -32,11 +32,21 @@ async function checkOwnership(userId: number, credentialId: number){
     return result;
 }
 
+async function deleteById(wifiId: number){
+
+    await client.wifi.delete({
+        where:{
+            id: wifiId
+        }
+    })
+}
+
 const wifiRepository = {
 
     insert,
     search,
-    checkOwnership
+    checkOwnership,
+    deleteById
 }
 
 export default wifiRepository;
