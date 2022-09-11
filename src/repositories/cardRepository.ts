@@ -47,12 +47,22 @@ async function checkOwnership(userId: number, cardId: number){
     return result;
 }
 
+async function deleteById(cardId: number){
+
+    await client.cards.delete({
+        where:{
+            id: cardId
+        }
+    })
+}
+
 const cardRepository = {
 
     getTittleById,
     insert,
     search,
-    checkOwnership
+    checkOwnership,
+    deleteById
 }
 
 export default cardRepository;
