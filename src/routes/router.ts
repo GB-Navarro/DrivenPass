@@ -5,6 +5,7 @@ import authRouter from "./authRoutes.js";
 import credentialRouter from "./credentialRoutes.js";
 import securityNoteRouter from "./securityNoteRoutes.js";
 import cardRouter from "./cardRoutes.js";
+import wifiRouter from "./wifiRoutes.js";
 
 const router = Router();
 
@@ -13,5 +14,6 @@ router.use(authRouter);
 router.use(credentialRouter);
 router.use(securityNoteRouter);
 router.use(cardRouter);
+router.use(wifiRouter);
 
 export default router;
