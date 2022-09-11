@@ -1,3 +1,4 @@
+import { cards } from "@prisma/client";
 import { client } from "../dbStrategy/postgres.js";
 import { Tittle } from "../types/genericTypes.js";
 
@@ -16,9 +17,17 @@ async function getTittleById(tittle: string, id: number) {
     return result;
 }
 
+async function insert(data: Omit<cards, "id">) {
+
+    await client.cards.create({
+        data: data
+    })
+}
+
 const cardRepository = {
 
-    getTittleById
+    getTittleById,
+    insert
 }
 
 export default cardRepository;
