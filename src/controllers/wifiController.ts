@@ -4,7 +4,7 @@ import { IWifiData } from "../types/wifiTypes.js";
 
 import wifiServices from "../services/wifiServices.js";
 
-async function create(req: Request, res: Response ){
+async function create(req: Request, res: Response) {
 
     const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
 
@@ -15,9 +15,21 @@ async function create(req: Request, res: Response ){
     res.status(201).send("The wifi has been created!");
 }
 
+async function search(req: Request, res: Response) {
+
+    res.status(200).send("The wifi has been created!");
+}
+
+async function searchById(req: Request, res: Response) {
+
+    res.status(200).send("The wifi has been created!");
+}
+
 const wifiController = {
 
-    create
+    create,
+    search,
+    searchById
 }
 
 export default wifiController;
