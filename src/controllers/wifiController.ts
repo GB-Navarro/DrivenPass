@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { IUserData } from "../types/authTypes.js";
 import { IWifiData } from "../types/wifiTypes.js";
+import { wifi } from "@prisma/client";
 
 import wifiServices from "../services/wifiServices.js";
 
@@ -17,10 +18,16 @@ async function create(req: Request, res: Response) {
 
 async function search(req: Request, res: Response) {
 
-    res.status(200).send("The wifi has been created!");
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
+
+    const result : wifi[] = await wifiServices.search(userId);
+
+    res.status(200).send(result);
 }
 
 async function searchById(req: Request, res: Response) {
+
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
 
     res.status(200).send("The wifi has been created!");
 }
