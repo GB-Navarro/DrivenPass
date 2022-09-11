@@ -42,6 +42,8 @@ async function deleteById(req: Request, res: Response){
 
     const { id: wifiId } = req.params;
 
+    await wifiServices.deleteById(userId, parseInt(wifiId));
+
     res.status(202).send("This wifi has been deleted!");
 }
 
