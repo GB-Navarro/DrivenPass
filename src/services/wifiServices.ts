@@ -5,9 +5,8 @@ import { wifi } from "@prisma/client";
 import genericUtils from "../utils/genericUtils.js";
 import wifiRepository from "../repositories/wifiRepository.js";
 
-async function create(userData: Omit<IUserData, "email">, wifiData: IWifiData) {
+async function create(userId: number, wifiData: IWifiData) {
 
-    const { id: userId }: Omit<IUserData, "email"> = userData;
     const { password, name, tittle }: IWifiData = wifiData;
 
     const encryptedPassword = genericUtils.encryptPassword(password);
