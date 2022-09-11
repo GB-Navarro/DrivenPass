@@ -39,10 +39,18 @@ async function checkOwnership(userId: number, wifiId: number) {
     return result;
 }
 
+async function searchById(userId: number, wifiId: number) {
+
+    const wifiData: wifi = await checkOwnership(userId, wifiId);
+
+    return wifiData;
+}
+
 const wifiServices = {
 
     create,
-    search
+    search,
+    searchById
 }
 
 export default wifiServices;
