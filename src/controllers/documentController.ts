@@ -36,11 +36,23 @@ async function searchById(req: Request, res: Response) {
     res.status(200).send(document);
 }
 
+async function deleteById(req: Request, res: Response) {
+
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
+
+    const { id: documentId } = req.params;
+
+    await documentServices.deleteById(userId, parseInt(documentId));
+
+    res.status(202).send("This document are been deleted!");
+}
+
 const documentController = {
     
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default documentController;

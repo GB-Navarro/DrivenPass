@@ -45,11 +45,18 @@ async function searchById(userId: number, documentId: number) {
     return documentData;
 }
 
+async function deleteById(userId: number, documentId: number){
+
+    await checkOwnership(userId, documentId);
+    await documentRepository.deleteById(documentId);
+}
+
 const documentServices = {
 
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default documentServices;
