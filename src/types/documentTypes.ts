@@ -1,3 +1,3 @@
 import { documents } from "@prisma/client";
 
-type IDocumentData = Omit<documents, "id" | "userId">;
+export type IDocumentData = Omit<documents, "id" | "userId">;
