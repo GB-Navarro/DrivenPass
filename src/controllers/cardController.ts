@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { IUserData } from "../types/authTypes";
-import { ICardData } from "../types/cardTypes";
+import { IUserData } from "../types/authTypes.js";
+import { ICardData } from "../types/cardTypes.js";
 
 async function create(req: Request, res: Response ){
 

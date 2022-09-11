@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { ICardData } from "../types/cardTypes.js";
 
-import cardSchemas from "../schemas/cardSchemas";
+import cardSchemas from "../schemas/cardSchemas.js";
 function validateCreateSchema(req: Request, res: Response, next: NextFunction) {
 
     const data: ICardData = req.body;
