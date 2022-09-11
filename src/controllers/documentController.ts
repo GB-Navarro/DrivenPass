@@ -9,6 +9,7 @@ async function create(req: Request, res: Response ){
 }
 
 const documentController = {
+    
     create
 }
 
