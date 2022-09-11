@@ -6,8 +6,9 @@ import genericMiddlewares from "../middlewares/genericMiddlewares.js";
 
 const cardRouter = Router();
 
-cardRouter.post("/cards/create", genericMiddlewares.validateToken, cardMiddlewares.validateCreateSchema ,cardController.create);
-cardRouter.get("/cards/search", genericMiddlewares.validateToken ,cardController.search);
-cardRouter.get("/cards/search/:id", genericMiddlewares.validateToken ,cardController.searchById);
+cardRouter.post("/cards/create", genericMiddlewares.validateToken, cardMiddlewares.validateCreateSchema, cardController.create);
+cardRouter.get("/cards/search", genericMiddlewares.validateToken, cardController.search);
+cardRouter.get("/cards/search/:id", genericMiddlewares.validateToken, cardController.searchById);
+cardRouter.delete("/cards/delete/:id", genericMiddlewares.validateToken, cardController.deleteById);
 
 export default cardRouter;
