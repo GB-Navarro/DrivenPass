@@ -27,6 +27,17 @@ async function search(userId: number) {
     return documentsData;
 }
 
+async function checkOwnership(userId: number, documentId: number) {
+
+    const result = await documentRepository.checkOwnership(userId, documentId);
+
+    if (result === null) {
+        throw { code: "error_InvalidRequest", message: "Invalid Request!" };
+    }
+
+    return result;
+}
+
 const documentServices = {
 
     create,
