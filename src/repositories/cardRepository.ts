@@ -24,10 +24,35 @@ async function insert(data: Omit<cards, "id">) {
     })
 }
 
+async function search(userId: number){
+
+    const result: cards[] = await client.cards.findMany({
+        where:{
+            userId: userId
+        }
+    });
+
+    return result;
+}
+
+async function checkOwnership(userId: number, cardId: number){
+
+    const result: cards = await client.cards.findFirst({
+        where:{
+            id: cardId,
+            userId: userId       
+        }
+    })
+
+    return result;
+}
+
 const cardRepository = {
 
     getTittleById,
-    insert
+    insert,
+    search,
+    checkOwnership
 }
 
 export default cardRepository;

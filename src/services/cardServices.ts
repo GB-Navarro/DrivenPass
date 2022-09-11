@@ -20,7 +20,7 @@ async function create(userId: number, cardData: ICardData){
 
     await checkTittleExistence(tittle, userId);
 
-    const encryptedSecurityCode = parseInt(genericUtils.encryptPassword(securityCode.toString()));
+    const encryptedSecurityCode = genericUtils.encryptPassword(securityCode);
     const encryptedPassword = genericUtils.encryptPassword(password);
 
     const data: Omit<cards, "id"> = {
@@ -38,8 +38,35 @@ async function create(userId: number, cardData: ICardData){
     await cardRepository.insert(data);
 }
 
+async function search(userId: number){
+
+    const data: cards[] = await cardRepository.search(userId);
+
+    return data;
+}
+
+async function checkOwnership(userId: number, cardId: number) {
+
+    const result = await cardRepository.checkOwnership(userId, cardId);
+
+    if (result === null) {
+        throw { code: "error_InvalidRequest", message: "Invalid Request!" };
+    }
+
+    return result;
+}
+
+async function searchById(userId: number, cardId: number) {
+
+    const data = await checkOwnership(userId, cardId);
+
+    return data;
+}
+
 const cardServices = {
-    create
+    create,
+    search,
+    searchById
 }
 
 export default cardServices;
