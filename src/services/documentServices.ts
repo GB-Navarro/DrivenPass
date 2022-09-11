@@ -38,10 +38,18 @@ async function checkOwnership(userId: number, documentId: number) {
     return result;
 }
 
+async function searchById(userId: number, documentId: number) {
+
+    const documentData = await checkOwnership(userId, documentId);
+
+    return documentData;
+}
+
 const documentServices = {
 
     create,
-    search
+    search,
+    searchById
 }
 
 export default documentServices;
