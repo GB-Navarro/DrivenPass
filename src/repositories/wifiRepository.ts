@@ -20,10 +20,23 @@ async function search(userId: number){
     return result;
 }
 
+async function checkOwnership(userId: number, credentialId: number){
+
+    const result: wifi = await client.wifi.findFirst({
+        where:{
+            id: credentialId,
+            userId: userId       
+        }
+    })
+
+    return result;
+}
+
 const wifiRepository = {
 
     insert,
-    search
+    search,
+    checkOwnership
 }
 
 export default wifiRepository;
