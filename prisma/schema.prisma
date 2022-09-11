@@ -10,7 +10,7 @@ datasource db {
 model cards {
   id             Int       @id(map: "cards_pk") @default(autoincrement())
   userId         Int
-  number         String    @unique(map: "public.cards_number_key")
+  number         String    
   name           String    @db.VarChar(50)
   securityCode   Int
   expirationDate String    @db.VarChar(5)
