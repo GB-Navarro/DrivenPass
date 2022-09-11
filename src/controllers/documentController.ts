@@ -31,9 +31,9 @@ async function searchById(req: Request, res: Response) {
 
     const { id: documentId } = req.params;
 
-    //const document = await documentServices.searchById(userId, parseInt(documentId));
+    const document = await documentServices.searchById(userId, parseInt(documentId));
 
-    //res.status(200).send(document);
+    res.status(200).send(document);
 }
 
 const documentController = {
