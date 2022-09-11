@@ -29,7 +29,11 @@ async function searchById(req: Request, res: Response) {
 
     const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
 
-    res.status(200).send("The wifi has been created!");
+    const { id: wifiId } = req.params;
+
+    const result: wifi = await wifiServices.searchById(userId, parseInt(wifiId));
+
+    res.status(200).send(result);
 }
 
 const wifiController = {
