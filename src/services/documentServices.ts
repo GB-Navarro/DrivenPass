@@ -1,5 +1,5 @@
 import { IDocumentData } from "../types/documentTypes";
-import { documents as document } from "@prisma/client";
+import { documents } from "@prisma/client";
 
 import documentRepository from "../repositories/documentRepository.js";
 
@@ -7,7 +7,7 @@ async function create(userId: number, documentData: IDocumentData) {
 
     const { type, name, emissionDate, validate, registrationNumber, issuer }: IDocumentData = documentData;
 
-    const data: Omit<document, "id"> = {
+    const data: Omit<documents, "id"> = {
         userId: userId,
         type: type,
         name: name,
@@ -20,9 +20,17 @@ async function create(userId: number, documentData: IDocumentData) {
     await documentRepository.insert(data);
 }
 
+async function search(userId: number) {
+
+    const documentsData: documents[] = await documentRepository.search(userId);
+
+    return documentsData;
+}
+
 const documentServices = {
 
-    create
+    create,
+    search
 }
 
 export default documentServices;
