@@ -9,9 +9,34 @@ async function insert(data: Omit<wifi, "id">) {
     })
 }
 
+async function search(userId: number){
+
+    const result: wifi[] = await client.wifi.findMany({
+        where:{
+            userId: userId
+        }
+    });
+
+    return result;
+}
+
+async function checkOwnership(userId: number, credentialId: number){
+
+    const result: wifi = await client.wifi.findFirst({
+        where:{
+            id: credentialId,
+            userId: userId       
+        }
+    })
+
+    return result;
+}
+
 const wifiRepository = {
 
-    insert
+    insert,
+    search,
+    checkOwnership
 }
 
 export default wifiRepository;

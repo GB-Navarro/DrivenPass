@@ -21,9 +21,36 @@ async function create(userId: number, wifiData: IWifiData) {
     await wifiRepository.insert(data);
 }
 
+async function search(userId: number){
+
+    const data: wifi[] = await wifiRepository.search(userId);
+
+    return data;
+}
+
+async function checkOwnership(userId: number, wifiId: number) {
+
+    const result = await wifiRepository.checkOwnership(userId, wifiId);
+
+    if (result === null) {
+        throw { code: "error_InvalidRequest", message: "Invalid Request!" };
+    }
+
+    return result;
+}
+
+async function searchById(userId: number, wifiId: number) {
+
+    const wifiData: wifi = await checkOwnership(userId, wifiId);
+
+    return wifiData;
+}
+
 const wifiServices = {
 
-    create
+    create,
+    search,
+    searchById
 }
 
 export default wifiServices;

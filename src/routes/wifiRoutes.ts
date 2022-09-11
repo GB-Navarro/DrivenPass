@@ -7,5 +7,7 @@ import wifiMiddlewares from "../middlewares/wifiMiddlewares.js";
 const wifiRouter = Router();
 
 wifiRouter.post("/wifi/create", genericMiddlewares.validateToken, wifiMiddlewares.validateCreateSchema ,wifiController.create);
+wifiRouter.get("/wifi/search", genericMiddlewares.validateToken ,wifiController.search);
+wifiRouter.get("/wifi/search/:id", genericMiddlewares.validateToken ,wifiController.searchById);
 
 export default wifiRouter;
