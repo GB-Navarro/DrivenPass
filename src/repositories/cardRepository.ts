@@ -51,7 +51,8 @@ const cardRepository = {
 
     getTittleById,
     insert,
-    search
+    search,
+    checkOwnership
 }
 
 export default cardRepository;

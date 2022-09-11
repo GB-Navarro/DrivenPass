@@ -45,9 +45,28 @@ async function search(userId: number){
     return data;
 }
 
+async function checkOwnership(userId: number, cardId: number) {
+
+    const result = await cardRepository.checkOwnership(userId, cardId);
+
+    if (result === null) {
+        throw { code: "error_InvalidRequest", message: "Invalid Request!" };
+    }
+
+    return result;
+}
+
+async function searchById(userId: number, cardId: number) {
+
+    const data = await checkOwnership(userId, cardId);
+
+    return data;
+}
+
 const cardServices = {
     create,
-    search
+    search,
+    searchById
 }
 
 export default cardServices;
