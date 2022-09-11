@@ -10,11 +10,23 @@ async function create(req: Request, res: Response) {
 
     await cardServices.create(userId, cardData);
 
-    res.status(200).send("Create!");
+    res.status(201).send("Create!");
+}
+
+async function search(req: Request, res: Response){
+
+    res.status(200).send("Search!");
+}
+
+async function searchById(req: Request, res: Response){
+    
+    res.status(200).send("SearchById!");
 }
 
 const cardController = {
-    create
+    create,
+    search,
+    searchById
 }
 
 export default cardController;

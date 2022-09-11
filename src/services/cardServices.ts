@@ -20,7 +20,7 @@ async function create(userId: number, cardData: ICardData){
 
     await checkTittleExistence(tittle, userId);
 
-    const encryptedSecurityCode = parseInt(genericUtils.encryptPassword(securityCode.toString()));
+    const encryptedSecurityCode = genericUtils.encryptPassword(securityCode);
     const encryptedPassword = genericUtils.encryptPassword(password);
 
     const data: Omit<cards, "id"> = {
