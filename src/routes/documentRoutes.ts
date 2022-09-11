@@ -9,5 +9,6 @@ const documentRouter = Router();
 documentRouter.post("/documents/create", genericMiddlewares.validateToken, documentMiddlewares.validateCreateSchema ,documentController.create);
 documentRouter.get("/documents/search", genericMiddlewares.validateToken ,documentController.search);
 documentRouter.get("/documents/search/:id", genericMiddlewares.validateToken ,documentController.searchById);
+documentRouter.delete("/documents/delete/:id", genericMiddlewares.validateToken ,documentController.deleteById);
 
 export default documentRouter;
