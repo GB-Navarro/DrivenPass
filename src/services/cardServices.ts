@@ -63,10 +63,17 @@ async function searchById(userId: number, cardId: number) {
     return data;
 }
 
+async function deleteById(userId: number, cardId: number){
+
+    await checkOwnership(userId, cardId);
+    await cardRepository.deleteById(cardId);
+}
+
 const cardServices = {
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default cardServices;

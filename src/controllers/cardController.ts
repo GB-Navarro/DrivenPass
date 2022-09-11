@@ -14,7 +14,7 @@ async function create(req: Request, res: Response) {
     res.status(201).send("Create!");
 }
 
-async function search(req: Request, res: Response){
+async function search(req: Request, res: Response) {
 
     const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
 
@@ -23,7 +23,7 @@ async function search(req: Request, res: Response){
     res.status(200).send(cardsData);
 }
 
-async function searchById(req: Request, res: Response){
+async function searchById(req: Request, res: Response) {
 
     const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
 
@@ -34,10 +34,23 @@ async function searchById(req: Request, res: Response){
     res.status(200).send(card);
 }
 
+async function deleteById(req: Request, res: Response) {
+
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
+
+    const { id: cardId } = req.params;
+
+    await cardServices.deleteById(userId, parseInt(cardId));
+
+    res.status(202).send("This card has been deleted!");
+}
+
 const cardController = {
+
     create,
     search,
-    searchById
+    searchById,
+    deleteById
 }
 
 export default cardController;
