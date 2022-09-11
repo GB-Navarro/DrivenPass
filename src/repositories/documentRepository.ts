@@ -19,10 +19,23 @@ async function search(userId: number){
     return result;
 }
 
+async function checkOwnership(userId: number, documentId: number){
+
+    const result: documents = await client.documents.findFirst({
+        where:{
+            id: documentId,
+            userId: userId       
+        }
+    })
+
+    return result;
+}
+
 const documentRepository = {
 
     insert,
-    search
+    search,
+    checkOwnership
 }
 
 export default documentRepository;
