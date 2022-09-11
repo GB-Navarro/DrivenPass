@@ -8,9 +8,21 @@ async function insert(data: Omit<documents, "id">) {
     })
 }
 
+async function search(userId: number){
+
+    const result: documents[] = await client.documents.findMany({
+        where:{
+            userId: userId
+        }
+    });
+
+    return result;
+}
+
 const documentRepository = {
 
-    insert
+    insert,
+    search
 }
 
 export default documentRepository;
