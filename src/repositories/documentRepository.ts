@@ -31,11 +31,21 @@ async function checkOwnership(userId: number, documentId: number){
     return result;
 }
 
+async function deleteById(documentId: number){
+
+    await client.documents.delete({
+        where:{
+            id: documentId
+        }
+    })
+}
+
 const documentRepository = {
 
     insert,
     search,
-    checkOwnership
+    checkOwnership,
+    deleteById
 }
 
 export default documentRepository;
