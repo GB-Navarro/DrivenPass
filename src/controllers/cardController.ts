@@ -36,6 +36,12 @@ async function searchById(req: Request, res: Response) {
 
 async function deleteById(req: Request, res: Response) {
 
+    const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
+
+    const { id: cardId } = req.params;
+
+    await cardServices.deleteById(userId, parseInt(cardId));
+
     res.status(202).send("This card has been deleted!");
 }
 
