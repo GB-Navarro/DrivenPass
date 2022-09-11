@@ -42,7 +42,7 @@ async function deleteById(req: Request, res: Response) {
 
     const { id: documentId } = req.params;
 
-    //await documentServices.deleteById(userId, parseInt(documentId));
+    await documentServices.deleteById(userId, parseInt(documentId));
 
     res.status(202).send("This document are been deleted!");
 }
