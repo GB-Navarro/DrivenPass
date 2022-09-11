@@ -47,6 +47,7 @@ model users {
   credentials   credentials[]
   securityNotes securityNotes[]
   wifi          wifi[]
+  documents     documents[]
 }
 
 model wifi {
@@ -58,8 +59,25 @@ model wifi {
   users    users  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wifi_fk0")
 }
 
+model documents{
+  id                  Int           @id(map: "documents_pk") @default(autoincrement())
+  userId              Int
+  type                documentTypes
+  name                String        @db.VarChar(50)
+  emissionDate        String        @db.VarChar(10)
+  validate            String        @db.VarChar(10)
+  registrationNumber  String        @db.VarChar(50)
+  issuer              String        @db.VarChar(50)
+  users               users         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "documents_fk0")
+}
+
 enum cardTypes {
   debit
   credit
   both
+}
+
+enum documentTypes{
+  RG
+  CNH
 }
