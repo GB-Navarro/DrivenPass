@@ -45,7 +45,7 @@ async function searchById(userId: number, documentId: number) {
     return documentData;
 }
 
-async function deleteById(userId: number, documentId: number){
+async function deleteById(userId: number, documentId: number) {
 
     await checkOwnership(userId, documentId);
     await documentRepository.deleteById(documentId);

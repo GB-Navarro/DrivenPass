@@ -8,10 +8,10 @@ async function insert(data: Omit<documents, "id">) {
     })
 }
 
-async function search(userId: number){
+async function search(userId: number) {
 
     const result: documents[] = await client.documents.findMany({
-        where:{
+        where: {
             userId: userId
         }
     });
@@ -19,22 +19,22 @@ async function search(userId: number){
     return result;
 }
 
-async function checkOwnership(userId: number, documentId: number){
+async function checkOwnership(userId: number, documentId: number) {
 
     const result: documents = await client.documents.findFirst({
-        where:{
+        where: {
             id: documentId,
-            userId: userId       
+            userId: userId
         }
     })
 
     return result;
 }
 
-async function deleteById(documentId: number){
+async function deleteById(documentId: number) {
 
     await client.documents.delete({
-        where:{
+        where: {
             id: documentId
         }
     })

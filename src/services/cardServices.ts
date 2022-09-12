@@ -14,8 +14,8 @@ async function checkTittleExistence(tittle: string, userId: number) {
     }
 }
 
-async function create(userId: number, cardData: ICardData){
-    
+async function create(userId: number, cardData: ICardData) {
+
     const { number, name, securityCode, expirationDate, password, isVirtual, type, tittle } = cardData;
 
     await checkTittleExistence(tittle, userId);
@@ -38,7 +38,7 @@ async function create(userId: number, cardData: ICardData){
     await cardRepository.insert(data);
 }
 
-async function search(userId: number){
+async function search(userId: number) {
 
     const data: cards[] = await cardRepository.search(userId);
 
@@ -63,13 +63,14 @@ async function searchById(userId: number, cardId: number) {
     return data;
 }
 
-async function deleteById(userId: number, cardId: number){
+async function deleteById(userId: number, cardId: number) {
 
     await checkOwnership(userId, cardId);
     await cardRepository.deleteById(cardId);
 }
 
 const cardServices = {
+
     create,
     search,
     searchById,

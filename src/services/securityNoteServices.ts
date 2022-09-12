@@ -19,10 +19,10 @@ async function create(userId: number, securityNoteData: Omit<ISecurityNoteData, 
 
     await checkTittleExistence(tittle, userId);
 
-    const data: ISecurityNoteData = {
+    const data: Omit<securityNotes, "id"> = {
         userId: userId,
-        tittle: tittle,
-        text: text
+        text: text,
+        tittle: tittle
     }
 
     await securityNoteRepository.insert(data);

@@ -24,10 +24,10 @@ async function insert(data: Omit<credentials, "id">) {
     })
 }
 
-async function search(userId: number){
+async function search(userId: number) {
 
     const result: credentials[] = await client.credentials.findMany({
-        where:{
+        where: {
             userId: userId
         }
     });
@@ -35,28 +35,29 @@ async function search(userId: number){
     return result;
 }
 
-async function checkOwnership(userId: number, credentialId: number){
+async function checkOwnership(userId: number, credentialId: number) {
 
     const result: credentials = await client.credentials.findFirst({
-        where:{
+        where: {
             id: credentialId,
-            userId: userId       
+            userId: userId
         }
     })
 
     return result;
 }
 
-async function deleteById(credentialId: number){
+async function deleteById(credentialId: number) {
 
     await client.credentials.delete({
-        where:{
+        where: {
             id: credentialId
         }
     })
 }
 
 const credentialRepository = {
+
     getTittleById,
     insert,
     search,
