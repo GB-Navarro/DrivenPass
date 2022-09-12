@@ -66,7 +66,7 @@ async function searchById(userId: number, credentialId: number) {
     return decryptedCredential;
 }
 
-async function deleteById(userId: number, credentialId: number){
+async function deleteById(userId: number, credentialId: number) {
 
     await checkOwnership(userId, credentialId);
     await credentialRepository.deleteById(credentialId);

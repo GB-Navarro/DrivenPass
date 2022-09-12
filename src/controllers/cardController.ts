@@ -1,8 +1,9 @@
 import { cards } from "@prisma/client";
 import { Request, Response } from "express";
-import cardServices from "../services/cardServices.js";
 import { IUserData } from "../types/authTypes.js";
 import { ICardData } from "../types/cardTypes.js";
+
+import cardServices from "../services/cardServices.js";
 
 async function create(req: Request, res: Response) {
 

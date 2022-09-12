@@ -4,7 +4,6 @@ import { wifi } from "@prisma/client";
 import wifiRepository from "../repositories/wifiRepository.js";
 import genericUtils from "../utils/genericUtils.js";
 
-
 async function create(userId: number, wifiData: IWifiData) {
 
     const { password, name, tittle }: IWifiData = wifiData;
@@ -21,7 +20,7 @@ async function create(userId: number, wifiData: IWifiData) {
     await wifiRepository.insert(data);
 }
 
-async function search(userId: number){
+async function search(userId: number) {
 
     const data: wifi[] = await wifiRepository.search(userId);
 
@@ -46,7 +45,7 @@ async function searchById(userId: number, wifiId: number) {
     return wifiData;
 }
 
-async function deleteById(userId: number, wifiId: number){
+async function deleteById(userId: number, wifiId: number) {
 
     await checkOwnership(userId, wifiId);
     await wifiRepository.deleteById(wifiId);

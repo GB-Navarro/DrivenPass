@@ -1,5 +1,4 @@
 import { client } from "../dbStrategy/postgres.js";
-import { IWifiData } from "../types/wifiTypes.js";
 import { wifi } from "@prisma/client";
 
 async function insert(data: Omit<wifi, "id">) {
@@ -9,10 +8,10 @@ async function insert(data: Omit<wifi, "id">) {
     })
 }
 
-async function search(userId: number){
+async function search(userId: number) {
 
     const result: wifi[] = await client.wifi.findMany({
-        where:{
+        where: {
             userId: userId
         }
     });
@@ -20,22 +19,22 @@ async function search(userId: number){
     return result;
 }
 
-async function checkOwnership(userId: number, credentialId: number){
+async function checkOwnership(userId: number, credentialId: number) {
 
     const result: wifi = await client.wifi.findFirst({
-        where:{
+        where: {
             id: credentialId,
-            userId: userId       
+            userId: userId
         }
     })
 
     return result;
 }
 
-async function deleteById(wifiId: number){
+async function deleteById(wifiId: number) {
 
     await client.wifi.delete({
-        where:{
+        where: {
             id: wifiId
         }
     })

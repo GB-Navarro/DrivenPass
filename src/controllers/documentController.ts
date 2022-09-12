@@ -5,11 +5,11 @@ import { documents } from "@prisma/client";
 
 import documentServices from "../services/documentServices.js";
 
-async function create(req: Request, res: Response ){
+async function create(req: Request, res: Response) {
 
     const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
 
-    const documentData: IDocumentData = req.body; 
+    const documentData: IDocumentData = req.body;
 
     await documentServices.create(userId, documentData);
 
@@ -48,7 +48,7 @@ async function deleteById(req: Request, res: Response) {
 }
 
 const documentController = {
-    
+
     create,
     search,
     searchById,

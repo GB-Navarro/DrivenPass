@@ -20,7 +20,7 @@ async function search(req: Request, res: Response) {
 
     const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
 
-    const result : wifi[] = await wifiServices.search(userId);
+    const result: wifi[] = await wifiServices.search(userId);
 
     res.status(200).send(result);
 }
@@ -36,7 +36,7 @@ async function searchById(req: Request, res: Response) {
     res.status(200).send(result);
 }
 
-async function deleteById(req: Request, res: Response){
+async function deleteById(req: Request, res: Response) {
 
     const { id: userId }: Omit<IUserData, "email"> = res.locals.data;
 

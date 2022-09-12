@@ -24,10 +24,10 @@ async function insert(data: Omit<cards, "id">) {
     })
 }
 
-async function search(userId: number){
+async function search(userId: number) {
 
     const result: cards[] = await client.cards.findMany({
-        where:{
+        where: {
             userId: userId
         }
     });
@@ -35,22 +35,22 @@ async function search(userId: number){
     return result;
 }
 
-async function checkOwnership(userId: number, cardId: number){
+async function checkOwnership(userId: number, cardId: number) {
 
     const result: cards = await client.cards.findFirst({
-        where:{
+        where: {
             id: cardId,
-            userId: userId       
+            userId: userId
         }
     })
 
     return result;
 }
 
-async function deleteById(cardId: number){
+async function deleteById(cardId: number) {
 
     await client.cards.delete({
-        where:{
+        where: {
             id: cardId
         }
     })

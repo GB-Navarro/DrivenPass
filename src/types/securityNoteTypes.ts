@@ -1,3 +1,3 @@
 import { securityNotes } from "@prisma/client";
 
-export type ISecurityNoteData = Omit<securityNotes, "id">
+export type ISecurityNoteData = Omit<securityNotes, "id" | "userId">
