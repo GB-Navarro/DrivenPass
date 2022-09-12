@@ -1,0 +1,10 @@
+import { Router } from "express";
+import wifiController from "../controllers/wifiController.js";
+import genericMiddlewares from "../middlewares/genericMiddlewares.js";
+import wifiMiddlewares from "../middlewares/wifiMiddlewares.js";
+var wifiRouter = Router();
+wifiRouter.post("/wifi/create", genericMiddlewares.validateToken, wifiMiddlewares.validateCreateSchema, wifiController.create);
+wifiRouter.get("/wifi/search", genericMiddlewares.validateToken, wifiController.search);
+wifiRouter.get("/wifi/search/:id", genericMiddlewares.validateToken, wifiController.searchById);
+wifiRouter["delete"]("/wifi/delete/:id", genericMiddlewares.validateToken, wifiController.deleteById);
+export default wifiRouter;

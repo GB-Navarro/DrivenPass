@@ -1,6 +1,24 @@
 {
+
+  "name": "projeto19-drivenpass",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GB-Navarro/DrivenPass.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GB-Navarro/DrivenPass/issues"
+  },
+  "homepage": "https://github.com/GB-Navarro/DrivenPass#readme",
+  "description": ""
+  ,
   "scripts": {
     "build": "tsc",
+    "dev":"nodemon src/app.ts",
     "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
